@@ -1,0 +1,105 @@
+{{>header}}
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 my-3">
+      <form>
+        <div class="form-group">
+          <label for="cityName">Enter Palce</label>
+          <input type="text" class="form-control my-2" id="cityName" aria-describedby="emailHelp" placeholder="Enter Place">
+        </div>
+        <button type="submit" class="btn btn-primary" id="serch_city">Submit</button>
+      </form>
+    </div>
+    <div class="col-md-6 my-3">
+       <div class="tempInformation">
+          <div class="top_layer">
+            <p id="days">Days</p>
+            <p id="today_time">Time</p>
+            <p id="today_date">date</p>
+
+          </div>
+          <div class="main_layer">
+            <p class="city_name" id="city_name">City Name</p>
+            <div class="middle_layer data_hide">
+              <p ><span id="temp">0</span><sub>o</sub>C</p>
+              <p id="temp_status"> <i class="fa fa-sun" area-hidden="true"></i> </p>
+            </div>
+          </div>
+       </div>
+    </div>
+  </div>
+</div>
+<script src="js/script.js"></script>
+{{>footer}}  
+
+<script>
+  const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const current_date = document.getElementById('today_date');
+  const current_time = document.getElementById('today_time');
+  const current_day = document.getElementById('days');
+  const currentDay = ()=>{
+    currentTime = new Date();
+    let date = currentTime.getDate()+" | "+ months[currentTime.getMonth()]+" | "+currentTime.getFullYear();
+    return date
+  };
+  const curTime = ()=>{
+    todayTime = new Date();
+    let Time = todayTime.toLocaleTimeString();
+    return Time
+  }
+  const curdays = ()=>{
+    todayy = new Date();
+    let Days = weekday[todayy.getDay()];
+    return Days
+  }
+  current_date.innerHTML = currentDay()
+  current_day.innerHTML = curTime() 
+  current_time.innerHTML = curdays()
+</script>
+
+<script>
+  const temp_status = document.getElementById('temp_status');
+  const tempreture = document.getElementById('temp')
+  const serch_city = document.getElementById('serch_city');
+  const cityName = document.getElementById('cityName');
+  const city_name = document.getElementById('city_name');
+  const getinfo = async(event) =>{             // async used for waiting to get data
+    event.preventDefault();                 // Click on alert ok than page will not be refresh
+    let cityNameValue = cityName.value;
+    if(cityNameValue===""){
+       city_name.innerText = 'please Enter city name';
+    } else {
+          try{
+              let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityNameValue}&units=metric&appid=9b759f1bf2f23cfccbe2f98fdb8f4b23` //  To get data in cells
+              const response = await fetch(url);
+              const res_data = await response.json();
+              const data_in_array = [res_data];
+              tempreture.innerText = data_in_array[0].main.temp;
+              const temp_mood = data_in_array[0].weather[0].main;
+              // const temp_mood = "Mist";
+              console.log(temp_mood)
+              city_name.innerText = `${data_in_array[0].name}, ${data_in_array[0].sys.country}`;
+              if(temp_mood=="Clouds"){
+                temp_status.innerHTML = "<i class='fa-solid fa-cloud' style='color:#fff'></i>";
+              }else if(temp_mood=="Rain") {
+                temp_status.innerHTML = "<i class='fa-solid fa-cloud-rain'></i>";
+              }else if(temp_mood=="Clear"){
+               temp_status.innerHTML = "<i class='fa-solid fa-sun'></i>";
+              }else if(temp_mood=="Haze"){
+               temp_status.innerHTML = "<i class='fa-solid fa-cloud-rain'></i>";
+              }else if(temp_mood=="Mist"){
+               temp_status.innerHTML = "<i class='fa-regular fa-cloud-fog'></i>";
+              }else{
+                temp_status.innerHTML = "<i class='fa-solid fa-sun'></i>";
+              }
+        }catch{
+          city_name.innerText = 'please Enter city name properly';
+        }
+      }
+    }
+  serch_city.addEventListener('click', getinfo);
+  // https://api.openweathermap.org/data/2.5/weather?q=india&units=metric&appid=9b759f1bf2f23cfccbe2f98fdb8f4b23  To get data in cells
+  // let url = "https://api.openweathermap.org/data/2.5/weather?q=india&appid=9b759f1bf2f23cfccbe2f98fdb8f4b23";
+</script>

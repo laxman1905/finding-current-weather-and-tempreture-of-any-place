@@ -1,0 +1,23 @@
+{
+  "name": "nodeproject",
+  "version": "1.0.0",
+  "description": "all dependencies",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "nodemon": "nodemon ./src/index.js"
+  },
+  "keywords": [
+    "hello"
+  ],
+  "author": "laxman",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "hbs": "^4.2.0",
+    "requests": "^0.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
