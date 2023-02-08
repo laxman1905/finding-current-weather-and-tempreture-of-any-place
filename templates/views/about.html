@@ -1,0 +1,39 @@
+{{>header}}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<div class="check_filter">
+    <div id="filter">
+            <!-- <input type="checkbox" value="1" id="one" class="checkBox" name="n1">
+            <label for="one">1</label>
+            <input type="checkbox" value="2" id="two" class="checkBox" name="n2">
+            <label for="two">2</label>
+            <input type="checkbox" value="3" id="three" class="checkBox" name="n3">
+            <label for="three">3</label> -->
+        </div>
+    </div>
+</div><!-- End check_filter -->
+<!--  -->
+<p id="demo"></p>
+
+<script>
+    const cars = ["BMW", "Volvo", "Saab", "Ford", "Fiat", "Audi"];
+
+    var text = "";
+    for (let i = 0; i < cars.length; i++) {
+
+    text +=  `<input type="checkbox" class="checkBox" >`+cars[i]; 
+    }
+
+    document.getElementById("demo").innerHTML =  text;
+
+    let elem = [...document.querySelectorAll('.checkBox')]
+    elem.forEach(item => item.addEventListener('change', getChecked))
+
+    function getChecked() {
+    let getChex = elem.filter(item => item.checked).map(item => item.className)
+    console.log(getChex,"kkkkkk")
+    }
+    
+</script>
+{{>footer}} 
