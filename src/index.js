@@ -93,6 +93,9 @@ app.post("/contact" ,async (req, res)=>{
     // res.send('hello from contact at port 2000');
     // console.log('hello from express'); 
 })
+app.get("/contact" ,async (req, res)=>{
+    res.render('contact')
+})
 
 app.get("/weather",(req, res)=>{
     res.render('weatherinfo');
